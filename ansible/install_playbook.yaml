@@ -1,0 +1,32 @@
+---
+- name: Intro to Ansible Playbooks
+  hosts: all
+
+  tasks:
+  - name: Copy file hosts with permissions
+    ansible.builtin.copy:
+      src: ./hosts
+      dest: /tmp/hosts_backup
+      mode: '0644'
+  
+  - name: Update apt pacakges
+    shell: sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+    become: yes
+    become_method: sudo
+
+  - name: Add wget
+    shell: wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+    become: yes
+    become_method: sudo
+
+  - name: Update apt pacakges
+    shell: apt-get update -y
+    become: yes
+    become_method: sudo
+
+  - name: Install postgresql
+    ansible.builtin.apt:
+      name: postgresql-14
+      state: present
+    become: yes
+    become_method: sudo
