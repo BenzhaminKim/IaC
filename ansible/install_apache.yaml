@@ -5,11 +5,13 @@
 
   tasks:
   - name: Update repository index
+    tags: update, ubuntu, debian
     apt:
       update_cache: yes
     when: ansible_distribution in ['Ubuntu', 'Debian']
   
   - name: Install Apache and libapache2
+    tags: ubuntu, apache, libapache2
     apt:
       name: 
         - apache2
