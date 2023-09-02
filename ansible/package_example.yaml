@@ -1,0 +1,12 @@
+---
+- name: Package and variables examples
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: Install some packages
+    package:
+      name: 
+        - "{{ some_package }}"
+      state: latest
+      update_cache: yes
