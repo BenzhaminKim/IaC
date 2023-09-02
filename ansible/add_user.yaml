@@ -1,0 +1,21 @@
+---
+- name: Add user
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: create hwi user
+    tags: always
+    user:
+      name: hwi
+      groups: root
+  
+  - name: Install Apache and libapache2
+    tags: ubuntu, apache, libapache2
+    apt:
+      name: 
+        - apache2
+        - libapache2-mod-php
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == 'Ubuntu'
